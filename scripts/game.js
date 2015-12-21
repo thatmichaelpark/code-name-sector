@@ -161,6 +161,7 @@ game = (function () {
 				break;
 			case 'move':
 				moveShip(gameState.currentShip);
+				setDisplay('ship');
 				setMoved(true);
 				break;
 			case 'range':
