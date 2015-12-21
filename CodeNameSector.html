@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Code Name: Sector</title>
+	<script src="scripts/game.js"></script>
+	<script src="scripts/chart.js"></script>
+	<script src="scripts/display.js"></script>
+	<script>
+		var latMin = 25;
+		var latMax = 75;
+		var lonMin = 25;
+		var lonMax = 75;
+		function app() {
+			chart.init();
+			game.init();
+			display.init();
+		}
+		window.addEventListener('load', app);
+	</script>
+	<style>
+		body {
+			background: lightgray;
+		}
+		div.outer {
+			text-align: center;
+		}
+		div.outer > div {
+			display:inline-block;
+			border: 1px solid gray;
+			margin: auto;
+			vertical-align: top;
+		}
+		#panel {
+			width: 500px;
+			height: 280px;
+			background: silver;
+			border-radius: 10px;
+			position: relative;
+		}
+		#panel div {
+			position: absolute;
+			border-radius: 10px;
+		}
+		#leds {
+			background: black;
+			left: 10px;
+			width: 150px;
+			top: 10px;
+			height: 100px;
+		}
+		#compass {
+			background: maroon;
+			left: 10px;
+			width: 150px;
+			height: 150px;
+			bottom: 10px;
+		}
+		#display {
+			left: 10px;
+			width: 150px;
+			top: 10px;
+			bottom: 10px;
+		}
+		#displaycanvas {
+			margin: 5px;
+		}
+		#controlbuttons {
+			background: maroon;
+			right: 10px;
+			width: 320px;
+			top: 10px;
+			bottom: 10px;
+		}
+		#controlbuttons button, select {
+			font-size: 11px;
+		}
+		button.small {
+			width: 4.5em;
+		}
+		button.big {
+			width: 6em;
+		}
+		#controlbuttons div {
+			position: absolute;
+			padding: 5px;
+			border: 1px solid white;
+			border-radius: 5px;
+			vertical-align: middle;
+		}
+		#controlbuttons p, span {
+			color: white;
+			padding: 10px;
+			margin: 0px;
+			font-family: sans-serif;
+			font-size: 13px;
+		}
+		#controlbuttons > div > p, span {
+			padding: 0px;
+			font-size: 10px;
+		}
+		#controlbuttons label {
+			color: white;
+			font-family: sans-serif;
+			font-size: 10px;
+			padding-right: 15px;
+		}
+		#shipcontrol {
+			top: 35px;
+			left: 15px;
+			right: 15px;
+		}
+		#steeringcontrol {
+			top: 82px;
+			left: 15px;
+			right: 175px;
+		}
+		#speedcontrol {
+			top: 82px;
+			left: 155px;
+			right: 15px;
+		}
+		#sonarcontrol {
+			top: 142px;
+			left: 15px;
+			right: 220px;
+		}
+		#torpedocontrol {
+			top: 142px;
+			left: 110px;
+			right: 15px;
+		}
+		#gamecontrol {
+			bottom: 15px;
+			left: 15px;
+			right: 15px;
+		}
+		#map {
+			position: relative;
+			padding: 20px;
+		}
+		#log {
+			margin: 5px;
+			width: 500px;
+			height: 100px;
+			border: 1px solid gray;
+			overflow-y: scroll;
+		}
+		#log > p {
+			text-align: left;
+			margin: 0;
+			font-family: 'Lucida Console', monospace;
+			font-size: 0.7em;
+		}
+	</style>
+</head>
+<body>
+	<div class="outer">
+		<div id="panel">
+			<div id="leds">
+			</div>
+			
+			<div id="compass">
+			</div>
+			
+			<div id="display">
+				<!-- This canvas is where the LEDs and ccmpass will be drawn. -->
+				<canvas id="displaycanvas" width="140" height="250">
+					HTML5 canvas not supported.
+				</canvas>
+			</div>
+			<div id="controlbuttons">
+					<p>COMBAT INFORMATION CENTER</p>
+				<div id="shipcontrol">
+					<button class="small" id="next">NEXT</button>
+					<button class="big" id="recall">RECALL</button>
+					<button class="small" id="move">MOVE</button>
+				</div>
+				<div id="steeringcontrol">
+					<p>STEERING</p>
+					<button class="small" id="left">LEFT</button>
+					<button class="small" id="right">RIGHT</button>
+				</div>
+				<div id="speedcontrol">
+					<p>SPEED</p>
+					<button class="big" id="slower">SLOWER</button>
+					<button class="big" id="faster">FASTER</button>
+				</div>
+				<div id="sonarcontrol">
+					<p>SONAR</p>
+					<button class="big" id="range">RANGE</button>
+				</div>
+				<div id="torpedocontrol">
+					<p>TORPEDO CONTROL</p>
+					<button class="small" id="aim">AIM</button>
+					<span>DEPTH:</span>
+					<select id="depthselect" disabled>
+						<option value="-">-</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+					</select>
+					<button class="small" id="fire">FIRE</button>
+				</div>
+				<div id="gamecontrol">
+					<p>GAME CONTROL</p>
+					<input type="checkbox" id="autoplot">
+					<label>AUTO-PLOT</label>
+					<select id="gametype">
+						<option value="regular">Regular</option>
+						<option value="evasive sub">Evasive Sub</option>
+						<option value="teach mode">Teach Mode</option>
+					</select>
+					<button class="big" id="restart">RESTART</button>
+				</div>
+			</div>
+		</div>
+
+		<div id="map">
+			<div id="colorbuttons" style="margin: auto;">
+				<div id="colorsquare" style="display: inline-block; width:1.5em; height:1.5em; vertical-align: middle; border: 2px solid black; background: red"></div>
+				<button value="eraser">Eraser</button>
+				<button value="red" style="color: pink; background: red;">Ship 1</button>
+				<button value="green" style="color: lightgreen; background: green;">Ship 2</button>
+				<button value="blue" style="color: lightblue; background: blue;">Ship 3</button>
+				<button value="black" style="color: lightgray; background: black;">Ship 4</button>
+				<button value="clear">Clear All</button>
+			</div>
+			<div style="position: relative;">
+				<canvas id="canvas0" width="460" height="440">
+					Your browser does not support HTML5 Canvas.
+				</canvas>
+				<canvas id="canvas1" width="460" height="440" style="position: absolute; left: 0; top: 0;">
+					Your browser does not support HTML5 Canvas.
+				</canvas>
+				<canvas id="canvas2" width="460" height="440" style="position: absolute; left: 0; top: 0;">
+					Your browser does not support HTML5 Canvas.
+				</canvas>
+			</div>
+		</div>
+		<div id="log">
+			<p>Battle Log</p>
+		</div>
+	</div>
+</body>
+</html>

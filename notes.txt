@@ -1,0 +1,12 @@
+2015-12-17 played "teach mode" successfully
+
+to do:
+move doesn't change range to ship; maybe should lock out move when range displayed?
+Also lock out left/right/slow/fast when aiming?
+chart snap to grid?
+
+
+
+sub finder?
+chart background image?
+sound?

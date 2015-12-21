@@ -1,0 +1,1 @@
+Web version of Code Name: Sector, an old computer board game.
