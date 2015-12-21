@@ -170,6 +170,7 @@ game = (function () {
 				var r = Math.max(dlat, dlon);
 				chart.plotRange(gameState.currentShip, r);
 				gameState.range = (r <= 2 && (dlat == 0 || dlon == 0 || dlat == dlon) ? 'F' : '') + r;	// string; e.g. '17' or 'F1'
+				game.log('Sub detected at range ' + gameState.range);
 				setDisplay('range');
 				break;
 			case 'aim':
