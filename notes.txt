@@ -1,7 +1,6 @@
 2015-12-17 played "teach mode" successfully
 
 to do:
-chart snap to grid?
 
 
 maybe to do:

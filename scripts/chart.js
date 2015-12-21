@@ -175,14 +175,14 @@ chart = (function () {
 		if (onTheMap(mouseX, mouseY)) {
 			if (paintMode) {
 				drawing = true;
-				lineStart.x = mouseX;
-				lineStart.y = mouseY;
+				lineStart.x = gridSnapX(mouseX);
+				lineStart.y = gridSnapY(mouseY);
 				ctxTop.strokeStyle = paintColor;
 				ctxMiddle.strokeStyle = paintColor;
 				ctxTop.beginPath();
 				ctxTop.lineWidth = 2;
 				ctxTop.moveTo(lineStart.x, lineStart.y);
-				ctxTop.lineTo(mouseX, mouseY);
+				ctxTop.lineTo(gridSnapX(mouseX), gridSnapY(mouseY));
 				ctxTop.stroke();
 			} else { // erase mode
 				erasing = true;
@@ -196,6 +196,15 @@ chart = (function () {
 		return lon2x(lonMin) <= x && x <= lon2x(lonMax)
 			&& lat2y(latMax) <= y && y <= lat2y(latMin);
 	}
+	
+	function gridSnapX(x) {
+		return lon2x(Math.round((x - lon2x(lonMin)) / gridSize + lonMin));
+	}
+	
+	function gridSnapY(y) {
+		return lat2y(Math.round((lat2y(latMin) - y) / gridSize + latMin));
+	}
+		
 	function clampMouse(mousex, mousey) {
 		var bRect = canvasTop.getBoundingClientRect();
 		var x = (mousex - bRect.left);
@@ -213,7 +222,7 @@ chart = (function () {
 			ctxMiddle.beginPath();
 			ctxMiddle.lineWidth = 2;
 			ctxMiddle.moveTo(lineStart.x, lineStart.y);
-			ctxMiddle.lineTo(mouse.x, mouse.y);
+			ctxMiddle.lineTo(gridSnapX(mouse.x), gridSnapY(mouse.y));
 			ctxMiddle.stroke();
 		} else { // erase mode
 			erasing = false;
@@ -236,7 +245,7 @@ chart = (function () {
 			ctxTop.clearRect(0, 0, canvasTop.width, canvasTop.height);
 			ctxTop.beginPath();
 			ctxTop.moveTo(lineStart.x, lineStart.y);
-			ctxTop.lineTo(mouse.x, mouse.y);
+			ctxTop.lineTo(gridSnapX(mouse.x), gridSnapY(mouse.y));
 			ctxTop.stroke();
 		} else {	// erase mode
 			ctxTop.clearRect(0, 0, canvasTop.width, canvasTop.height);
@@ -265,7 +274,7 @@ chart = (function () {
 			selectColor(ship.color);
 			if (ship.prevLat) {
 				ctxMiddle.beginPath();
-				ctxMiddle.lineWidth = 2;
+				ctxMiddle.lineWidth = 1;
 				ctxMiddle.strokeStyle = ship.color;
 				ctxMiddle.moveTo(lon2x(ship.prevLon), lat2y(ship.prevLat));
 				ctxMiddle.lineTo(lon2x(ship.lon), lat2y(ship.lat));
