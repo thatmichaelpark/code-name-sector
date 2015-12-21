@@ -1,0 +1,133 @@
+body {
+	background: lightgray;
+}
+div.outer {
+	text-align: center;
+}
+div.outer > div {
+	display:inline-block;
+	border: 1px solid gray;
+	margin: auto;
+	vertical-align: top;
+}
+#panel {
+	width: 500px;
+	height: 280px;
+	background: silver;
+	border-radius: 10px;
+	position: relative;
+}
+#panel div {
+	position: absolute;
+	border-radius: 10px;
+}
+#leds {
+	background: black;
+	left: 10px;
+	width: 150px;
+	top: 10px;
+	height: 100px;
+}
+#compass {
+	background: maroon;
+	left: 10px;
+	width: 150px;
+	height: 150px;
+	bottom: 10px;
+}
+#display {
+	left: 10px;
+	width: 150px;
+	top: 10px;
+	bottom: 10px;
+}
+#displaycanvas {
+	margin: 5px;
+}
+#controlbuttons {
+	background: maroon;
+	right: 10px;
+	width: 320px;
+	top: 10px;
+	bottom: 10px;
+}
+#controlbuttons button, select {
+	font-size: 11px;
+}
+button.small {
+	width: 4.5em;
+}
+button.big {
+	width: 6em;
+}
+#controlbuttons div {
+	position: absolute;
+	padding: 5px;
+	border: 1px solid white;
+	border-radius: 5px;
+	vertical-align: middle;
+}
+#controlbuttons p, span {
+	color: white;
+	padding: 10px;
+	margin: 0px;
+	font-family: sans-serif;
+	font-size: 13px;
+}
+#controlbuttons > div > p, span {
+	padding: 0px;
+	font-size: 10px;
+}
+#controlbuttons label {
+	color: white;
+	font-family: sans-serif;
+	font-size: 10px;
+	padding-right: 15px;
+}
+#shipcontrol {
+	top: 35px;
+	left: 15px;
+	right: 15px;
+}
+#steeringcontrol {
+	top: 82px;
+	left: 15px;
+	right: 175px;
+}
+#speedcontrol {
+	top: 82px;
+	left: 155px;
+	right: 15px;
+}
+#sonarcontrol {
+	top: 142px;
+	left: 15px;
+	right: 220px;
+}
+#torpedocontrol {
+	top: 142px;
+	left: 110px;
+	right: 15px;
+}
+#gamecontrol {
+	bottom: 15px;
+	left: 15px;
+	right: 15px;
+}
+#map {
+	position: relative;
+	padding: 20px;
+}
+#log {
+	margin: 5px;
+	width: 500px;
+	height: 100px;
+	border: 1px solid gray;
+	overflow-y: scroll;
+}
+#log > p {
+	text-align: left;
+	margin: 0;
+	font-family: 'Lucida Console', monospace;
+	font-size: 0.7em;
+}
