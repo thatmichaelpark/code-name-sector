@@ -24,8 +24,7 @@ game = (function () {
 		gameState.evasiveSub = gameType == 'evasive sub';	// boolean
 
 		if (gameType == 'teach mode') {
-			gameState.sub = {lat:33, lon:64, heading:1, depth: 1};	// hack: one step before actual initial position
-//			gameState.sub = {lat:34, lon:34, heading:1, depth: 1};	// hack: one step before actual initial position
+			gameState.sub = {lat:34, lon:34, heading:1, depth: 1};	// hack: one step before actual initial position
 																	//  because we're going to start with 'next'
 																	//  which will advance the sub (see below).
 		} else {
