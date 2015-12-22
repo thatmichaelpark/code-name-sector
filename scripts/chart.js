@@ -295,6 +295,7 @@ chart = (function () {
 			var y = lat2y(ship.lat);
 			var d = range * gridSize;
 			ctxMiddle.beginPath();
+			ctxMiddle.lineWidth = 1;
 			ctxMiddle.strokeStyle = ship.color;
 			ctxMiddle.moveTo(x - d, y - d);
 			ctxMiddle.lineTo(x + d, y - d);
