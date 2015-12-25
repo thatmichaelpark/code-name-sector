@@ -210,7 +210,7 @@ game = (function () {
 					newCourse(gameState.currentShip);
 					game.log('Ship ' + gameState.currentShip.no + ' now at ' +
 						gameState.currentShip.lat + 'N, ' + gameState.currentShip.lon + 'E.');
-					chart.plotShip(ship);
+					chart.plotShip(gameState.currentShip);
 				} else if (result == 0) {	// SUB: sub destroyed
 					game.log('Sub at ' + gameState.sub.lat + 'N, ' +
 							gameState.sub.lon + 'E destroyed at depth ' +
