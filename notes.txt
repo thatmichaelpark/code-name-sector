@@ -1,12 +1,17 @@
-2015-12-17 played "teach mode" successfully
+A few implementation notes for future reference.
 
-to do:
+CN:S is written in HTML5 and Javascript.
+
+There are three main divs in the html:
+* The "panel", which contains a canvas element (for the 7-segment display and compass) and the button controls.
+* The "chart", which contains three canvas elements and drawing controls.
+* The "log", which is used for text output.
+
+There are three Javascript files:
+* chart.js, which handles graphics and user interaction on the chart div.
+* display.js, which handles the 7-segment display and compass.
+* game.js, which handles game play in a state machine that is driven by input from the panel buttons.
+
+The chart consists of three layered canvas elements. The bottom canvas is where the grid lines are drawn; the top layer is where the rubberband line is drawn when the user is dragging the mouse; the middle layer is where the rubberband lines (and computer-controlled plotting, if auto-plot is enabled) are drawn. The eraser effects only the middle layer.
 
 
-maybe to do:
-should lock out move when range displayed?
-Also lock out left/right/slow/fast when aiming?
-
-sub finder?
-chart background image?
-sound?
