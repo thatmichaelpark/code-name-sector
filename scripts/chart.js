@@ -116,7 +116,7 @@ chart = (function () {
 
 		drawGrid(ctxBottom);
 
-		mapStyle = document.getElementById('map').style;
+		mapStyle = document.getElementById('chart').style;
 
 		canvasTop.addEventListener("mousedown", mouseDownListener);
 		window.addEventListener("mouseup", mouseUpListener);
