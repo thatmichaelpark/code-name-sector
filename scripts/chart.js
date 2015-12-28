@@ -105,7 +105,7 @@ chart = (function () {
 	var canvasTop;
 	var ctxTop;
 
-	var mapStyle;	// for mousemove handler to change cursor when mouse is over the grid.
+	var chartStyle;	// for mousemove handler to change cursor when mouse is over the grid.
 
 	function init() {
 		ctxBottom = document.getElementById("canvas0").getContext("2d");
@@ -116,7 +116,7 @@ chart = (function () {
 
 		drawGrid(ctxBottom);
 
-		mapStyle = document.getElementById('map').style;
+		chartStyle = document.getElementById('chart').style;
 
 		canvasTop.addEventListener("mousedown", mouseDownListener);
 		window.addEventListener("mouseup", mouseUpListener);
@@ -130,10 +130,10 @@ chart = (function () {
 	}
 	
 	function reset() {
-		clearMap();
+		clearChart();
 	}
 	
-	function clearMap() {
+	function clearChart() {
 		ctxTop.clearRect(0, 0, canvasTop.width, canvasTop.height);
 		ctxMiddle.clearRect(0, 0, canvasTop.width, canvasTop.height);
 	}
@@ -159,7 +159,7 @@ chart = (function () {
 			setColorSquareColor('white');
 			paintMode = false;
 		} else if (c == 'clear') {
-			clearMap();
+			clearChart();
 			paintMode = true;
 		} else {
 			setColorSquareColor(c);
@@ -172,7 +172,7 @@ chart = (function () {
 		var bRect = canvasTop.getBoundingClientRect();
 		mouseX = (e.clientX - bRect.left);
 		mouseY = (e.clientY - bRect.top);
-		if (onTheMap(mouseX, mouseY)) {
+		if (onTheChart(mouseX, mouseY)) {
 			if (paintMode) {
 				drawing = true;
 				lineStart.x = gridSnapX(mouseX);
@@ -192,7 +192,7 @@ chart = (function () {
 		}
 	}
 	
-	function onTheMap(x, y) {
+	function onTheChart(x, y) {
 		return lon2x(lonMin) <= x && x <= lon2x(lonMax)
 			&& lat2y(latMax) <= y && y <= lat2y(latMin);
 	}
@@ -235,10 +235,10 @@ chart = (function () {
 		var mouseX = (e.clientX - bRect.left);
 		var mouseY = (e.clientY - bRect.top);
 		if (paintMode) {
-			if (onTheMap(mouseX, mouseY)) {
-				mapStyle.cursor = 'crosshair';
+			if (onTheChart(mouseX, mouseY)) {
+				chartStyle.cursor = 'crosshair';
 			} else {
-				mapStyle.cursor = 'default';
+				chartStyle.cursor = 'default';
 			}
 			if (!drawing) return;
 			var mouse = clampMouse(e.clientX, e.clientY);
@@ -249,7 +249,7 @@ chart = (function () {
 			ctxTop.stroke();
 		} else {	// erase mode
 			ctxTop.clearRect(0, 0, canvasTop.width, canvasTop.height);
-			if (!onTheMap(mouseX, mouseY)) return;
+			if (!onTheChart(mouseX, mouseY)) return;
 			ctxTop.strokeStyle = 'black';
 			ctxTop.lineWidth = 1;
 			ctxTop.strokeRect(mouseX - eraserSize/2, mouseY - eraserSize/2, eraserSize, eraserSize);
