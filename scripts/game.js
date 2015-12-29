@@ -240,13 +240,22 @@ game = (function () {
 		return;
 		
 		function moveSub() {
-			while (true) {
-				var newLat = gameState.sub.lat + dlats[gameState.sub.heading];
-				var newLon = gameState.sub.lon + dlons[gameState.sub.heading];
-				if (latMin + 5 <= newLat && newLat <= latMax - 5
-				 && lonMin + 5 <= newLon && newLon <= lonMax - 5) break;
-				// if sub is about to go outside the limit line, change heading
-				gameState.sub.heading = randi(0, 7);
+			var newLat = gameState.sub.lat + dlats[gameState.sub.heading];
+			var newLon = gameState.sub.lon + dlons[gameState.sub.heading];
+			
+			if (latMin + 5 <= newLat && newLat <= latMax - 5
+			 && lonMin + 5 <= newLon && newLon <= lonMax - 5) {
+			 	
+				// sub is inside or on the limit line; do nothing
+				
+			} else {	// if sub is about to go outside the limit line, change heading
+					//  to one that keeps the sub within (not on) the limit line.
+				do {
+					gameState.sub.heading = randi(0, 7);
+					newLat = gameState.sub.lat + dlats[gameState.sub.heading];
+					newLon = gameState.sub.lon + dlons[gameState.sub.heading];
+				} while (newLat <= latMin + 5 || newLat >= latMax - 5
+				      || newLon <= lonMin + 5 || newLon >= lonMax - 5);
 			}
 			gameState.sub.lat = newLat;
 			gameState.sub.lon = newLon;
