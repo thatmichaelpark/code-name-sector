@@ -170,8 +170,8 @@ chart = (function () {
 	
 	function mouseDownListener(e) {
 		var bRect = canvasTop.getBoundingClientRect();
-		mouseX = (e.clientX - bRect.left);
-		mouseY = (e.clientY - bRect.top);
+		var mouseX = (e.clientX - bRect.left);
+		var mouseY = (e.clientY - bRect.top);
 		if (onTheChart(mouseX, mouseY)) {
 			if (paintMode) {
 				drawing = true;
