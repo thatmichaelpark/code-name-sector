@@ -117,8 +117,9 @@ display = (function () {
 				d = gameState.currentShip.heading;
 				break;
 			case 'range':
-				s = '      '.substring(0, 6 - gameState.range.length) + gameState.range + ' ';
-				d = -1;
+				s = gameState.currentShip.no + '' + gameState.currentShip.speed +
+					'   '.substring(0, 4 - gameState.range.length) + gameState.range + ' ';
+				d = gameState.currentShip.heading;
 				break;
 			case 'aim':
 				s = '       ';
