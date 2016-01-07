@@ -259,7 +259,7 @@ game = (function () {
 			}
 			gameState.sub.lat = newLat;
 			gameState.sub.lon = newLon;
-			console.log(newLat + "N, " + newLon + "E, depth " + gameState.sub.depth);
+			console.log(newLat + "N, " + newLon + "E, heading " + gameState.sub.heading + ", depth " + gameState.sub.depth);
 		}
 
 		function checkCollisions(ship) {
