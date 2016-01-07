@@ -160,8 +160,11 @@ game = (function () {
 				setDisplay('ship');
 				break;
 			case 'move':
-				moveShip(gameState.currentShip);
-				setDisplay('ship');
+				if (moveShip(gameState.currentShip)) {
+					setDisplay('ship');
+				} else {
+					setDisplay('COLL');
+				}
 				setMoved(true);
 				break;
 			case 'range':
@@ -302,6 +305,7 @@ game = (function () {
 		}
 		
 		function moveShip(ship) {
+		// return true if no collision, false otherwise.
 			game.log('Ship ' + ship.no + ' heading ' + compassDirs[ship.heading] + ', speed ' + ship.speed + '.');
 			var collision = tryToMove(ship);
 			if (collision) {
@@ -310,13 +314,13 @@ game = (function () {
 				ship.lon = collision.lon;
 				chart.plotShip(ship);
 				newCourse(ship);
-				setDisplay('COLL');
 				if (gameState.evasiveSub) {
 					gameState.sub.heading = (gameState.sub.heading + randi(-1, 1)) & 7;
 				}
 			}
 			game.log('Ship ' + ship.no + ' now at ' + ship.lat + 'N, ' + ship.lon + 'E.');
 			chart.plotShip(ship);
+			return !collision;
 		}
 	}
 
